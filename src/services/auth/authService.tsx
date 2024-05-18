@@ -1,8 +1,8 @@
-import {AuthData} from '../contexts/Auth';
+import {AuthData} from '../../contexts/Auth';
 
 async function signIn(username: string, password: string): Promise<AuthData> {
   try {
-    const response = await fetch('https://{url}/auth/login', {
+    const response = await fetch(`https://${process.env.API_URL}/auth/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -14,7 +14,8 @@ async function signIn(username: string, password: string): Promise<AuthData> {
     });
 
     if (!response.ok) {
-      throw new Error('Erro ao autenticar');
+      const errorData = await response.json();
+      throw new Error(errorData.message);
     }
 
     const data = await response.json();
@@ -24,7 +25,6 @@ async function signIn(username: string, password: string): Promise<AuthData> {
       username: username,
     };
   } catch (error) {
-    console.log(error);
     throw new Error('Credenciais incorretas');
   }
 }

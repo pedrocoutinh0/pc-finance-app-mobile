@@ -1,7 +1,7 @@
 import React, {useContext} from 'react';
 
 import {createContext, useState} from 'react';
-import {authService} from '../services/authService';
+import {authService} from '../services/auth/authService';
 
 export interface AuthData {
   token: string;
